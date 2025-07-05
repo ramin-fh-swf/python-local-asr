@@ -9,6 +9,11 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+# pool:
+  # name: AgentPoolVM
+  # demands: Agent.Name -equals vm-agent
+  
+
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
