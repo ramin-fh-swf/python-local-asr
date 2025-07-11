@@ -64,3 +64,26 @@ steps:
   displayName: 'Check code formatting with Black'
   continueOnError: false
 
+# Generate coverage report
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'tests/htmlcov'
+    artifactName: 'test-coverage-report'
+    publishLocation: 'Container'
+  name: publish_coverage_report
+  displayName: 'Publish coverage report artifact'
+  
+
+# Create ZIP package of the application
+- script: |
+    zip -r wav2vec_package.zip wav2vec_audio_transcribe.py test_audio_files/ models/ requirements.txt
+  name: create_zip
+  displayName: 'Create ZIP package of application'
+
+# Publish the ZIP package as an artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'wav2vec_package.zip'
+    artifactName: 'transcriber-zip'
+    publishLocation: 'Container'
+  displayName: 'Publish application ZIP artifact'
