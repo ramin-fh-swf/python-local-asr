@@ -57,3 +57,10 @@ steps:
     fi
   displayName: 'Integration test: validate transcription output'
 
+# Check code formatting with Black
+- script: |
+    source $(VENV_DIR)/bin/activate
+    black wav2vec_audio_transcribe.py --check
+  displayName: 'Check code formatting with Black'
+  continueOnError: false
+
