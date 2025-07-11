@@ -41,3 +41,19 @@ steps:
     source $(VENV_DIR)/bin/activate
     python3 -m pytest
   displayName: 'Run tests with pytest'
+
+# Integration test
+- script: |
+    source $(VENV_DIR)/bin/activate
+    OUTPUT=$(python3 wav2vec_audio_transcribe.py test_audio_files/common_voice_en_42693865.mp3)
+    EXPECTED="THE INSTRUCTION MANUEL OF THE ENGLISH VERSION IS ALSO FILLED WITH INCONSISTENT INFORMATION"
+    echo "Output: $OUTPUT"
+    echo "Expected: $EXPECTED"
+    if [ "$OUTPUT" != "$EXPECTED" ]; then
+      echo "Transcription did not match expected output."
+      exit 1
+    else
+      echo "Transcription matched expected output."
+    fi
+  displayName: 'Integration test: validate transcription output'
+
